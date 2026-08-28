@@ -15,36 +15,42 @@ const frameSrc: Record<PersonCard["colorVariant"], string> = {
 // Card aspect ratio taken from the bordeaux frame's native size (948x1659).
 // The navy frame's native ratio (941x1672) is very slightly different —
 // object-contain on the frame <img> below lets it sit undistorted inside
-// this shared canvas instead of being stretched to match.
+// this shared canvas instead of being stretched to match. No transform/
+// scale is applied to either frame — both render at their true shape.
 const CARD_ASPECT = "aspect-[948/1659]";
+
+// Transparent-window shape, measured directly from both frame PNGs' alpha
+// channels (percent of the card box): bordeaux TL(11.5,14.5) TR(88.5,5.7)
+// BR(88.5,63.8) BL(11.5,51.9); navy TL(12,14.7) TR(88,6) BR(88,64.2)
+// BL(12,52.6) — the two are within ~1% of each other, so one shared
+// polygon (averaged, rounded to whole percent) fits both accurately.
+const PHOTO_WINDOW_CLIP = "polygon(12% 15%, 88% 6%, 88% 64%, 12% 52%)";
 
 function PeopleCard({ person }: { person: PersonCard }) {
   return (
     <Link href="/people" className="group block h-full">
       <div className={`relative w-full overflow-hidden ${CARD_ASPECT}`}>
-        {/* 1. Photo — fills the whole card. No separate clip-path: the
-            frame's own alpha channel (below) is the single source of truth
-            for the visible window shape, so photo and frame can never
-            drift out of alignment, even when the frame is scaled up. */}
-        <Image
-          src={person.photo.src}
-          alt={person.photo.alt}
-          fill
-          sizes="(max-width: 768px) 80vw, 20vw"
-          className="z-[1] object-cover transition-transform duration-[450ms] ease-out group-hover:scale-[1.03]"
-          style={{ objectPosition: person.photo.position ?? "center center" }}
-        />
-        {/* 2. Frame overlay — the card's actual visible shape. Scaled up
-            slightly (uniform, no distortion) to push the PNG's own outer
-            transparent margin outside the card, so the drawn frame edge
-            sits close to the card edge instead of leaving dead space that
-            reads as extra gap between cards. */}
+        {/* 1. Photo — clipped to the frame's transparent window so it can
+            never show through into the color face below. Hover zoom stays
+            inside this clip, so it can't spill outside the frame. */}
+        <div className="absolute inset-0 z-[1] overflow-hidden" style={{ clipPath: PHOTO_WINDOW_CLIP }}>
+          <Image
+            src={person.photo.src}
+            alt={person.photo.alt}
+            fill
+            sizes="(max-width: 768px) 80vw, 20vw"
+            className="object-cover transition-transform duration-[450ms] ease-out group-hover:scale-[1.03]"
+            style={{ objectPosition: person.photo.position ?? "center center" }}
+          />
+        </div>
+        {/* 2. Frame overlay — true shape and aspect ratio, no CSS scale or
+            distortion */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={frameSrc[person.colorVariant]}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-[2] h-full w-full origin-center scale-105 object-contain lg:scale-110"
+          className="pointer-events-none absolute inset-0 z-[2] h-full w-full object-contain"
         />
         {/* 3. Text — sits on the frame's color face, well below the
             window's lowest point so it never overlaps the photo */}
@@ -93,7 +99,7 @@ export default function People() {
         </div>
 
         {/* Desktop/tablet: tight non-scroll row of 5 */}
-        <div className="mt-4 hidden gap-[clamp(12px,1vw,18px)] sm:flex">
+        <div className="mt-4 hidden gap-[clamp(10px,0.9vw,16px)] sm:flex">
           {peopleCards.map((person) => (
             <div key={person.id} className="flex-1">
               <PeopleCard person={person} />
