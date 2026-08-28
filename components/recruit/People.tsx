@@ -21,44 +21,43 @@ const CARD_ASPECT = "aspect-[948/1659]";
 
 function PeopleCard({ person }: { person: PersonCard }) {
   return (
-    <Link href="/people" className="group block h-full">
-      <div className={`relative w-full overflow-hidden ${CARD_ASPECT}`}>
-        {/* 1. Photo — full card, no clip-path. The new frame PNG is fully
-            opaque below the window (bordeaux/navy color face), so the
-            frame alone hides the lower half of the photo — a separate
-            clip-path is redundant and was the source of the thin white
-            seam along the window edge. A 1px inset overscan (not a scale)
-            keeps antialiasing from ever showing a sliver of the card's own
-            background between photo and frame. */}
-        <Image
-          src={person.photo.src}
-          alt={person.photo.alt}
-          fill
-          sizes="(max-width: 768px) 80vw, 20vw"
-          className="z-[1] object-cover transition-transform duration-[450ms] ease-out group-hover:scale-[1.03]"
-          style={{ objectPosition: person.photo.position ?? "center center", inset: "-1px" }}
-        />
-        {/* 2. Frame overlay — true shape and aspect ratio, no CSS scale,
-            clip-path, or distortion */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={frameSrc[person.colorVariant]}
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-[2] h-full w-full object-contain"
-        />
-        {/* 3. Text — sits on the frame's color face, well below the
-            window's lowest point so it never overlaps the photo. Left/right
-            inset widened so no label (incl. the ones with an English "・")
-            can start flush with — or clip past — the card's own edge. */}
-        <div className="absolute left-6 right-6 top-[calc(72%+10px)] bottom-[30px] z-[3] flex flex-col justify-between gap-6 text-white">
-          <div>
-            <p className="text-[11px] font-semibold leading-[1.3] tracking-[0.13em]">{person.labelEn}</p>
-            <p className="mt-1 text-[13px] font-medium leading-[1.5]">{person.labelJa}</p>
-            <p className="mt-1 text-[11px] font-normal text-white/85">{person.year}</p>
-          </div>
-          <p className="whitespace-pre-line text-[14px] font-medium leading-[1.7]">{person.message}</p>
+    // The card's own root IS the sized/clipped box — no extra wrapper div
+    // between it and Photo/Frame/Text, and overflow-hidden lives here
+    // directly, so nothing can ever paint outside these exact bounds.
+    <Link
+      href="/people"
+      className={`group relative block w-full min-w-0 overflow-hidden ${CARD_ASPECT}`}
+    >
+      {/* 1. Photo — full card, no clip-path. The frame PNG is fully opaque
+          below the window (bordeaux/navy color face), so the frame alone
+          hides the lower part of the photo. */}
+      <Image
+        src={person.photo.src}
+        alt={person.photo.alt}
+        fill
+        sizes="(max-width: 768px) 80vw, 20vw"
+        className="z-[1] object-cover transition-transform duration-[450ms] ease-out group-hover:scale-[1.03]"
+        style={{ objectPosition: person.photo.position ?? "center center" }}
+      />
+      {/* 2. Frame overlay — true shape and aspect ratio: no scale,
+          translate, margin, padding, inset offset, or object-fill. Fills
+          the card exactly edge-to-edge. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={frameSrc[person.colorVariant]}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[2] block h-full w-full object-contain"
+      />
+      {/* 3. Text — sits on the frame's color face, well below the
+          window's lowest point so it never overlaps the photo. */}
+      <div className="absolute left-6 right-6 top-[calc(72%+17px)] bottom-[30px] z-[3] flex flex-col justify-between gap-6 text-white">
+        <div>
+          <p className="text-[11px] font-semibold leading-[1.3] tracking-[0.13em]">{person.labelEn}</p>
+          <p className="mt-1 text-[13px] font-medium leading-[1.5]">{person.labelJa}</p>
+          <p className="mt-1 text-[11px] font-normal text-white/85">{person.year}</p>
         </div>
+        <p className="whitespace-pre-line text-[14px] font-medium leading-[1.7]">{person.message}</p>
       </div>
     </Link>
   );
@@ -95,10 +94,10 @@ export default function People() {
           </p>
         </div>
 
-        {/* Desktop/tablet: tight non-scroll row of 5 */}
+        {/* Desktop/tablet: tight non-scroll row of 5, equal-width columns */}
         <div className="mt-4 hidden gap-[clamp(6px,0.5vw,10px)] sm:flex">
           {peopleCards.map((person) => (
-            <div key={person.id} className="flex-1">
+            <div key={person.id} className="min-w-0 flex-1">
               <PeopleCard person={person} />
             </div>
           ))}
