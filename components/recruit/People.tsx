@@ -19,32 +19,27 @@ const frameSrc: Record<PersonCard["colorVariant"], string> = {
 // scale is applied to either frame — both render at their true shape.
 const CARD_ASPECT = "aspect-[948/1659]";
 
-// Transparent-window shape, measured directly from both frame PNGs' alpha
-// channels (percent of the card box): bordeaux TL(11.5,14.5) TR(88.5,5.7)
-// BR(88.5,63.8) BL(11.5,51.9); navy TL(12,14.7) TR(88,6) BR(88,64.2)
-// BL(12,52.6) — the two are within ~1% of each other, so one shared
-// polygon (averaged, rounded to whole percent) fits both accurately.
-const PHOTO_WINDOW_CLIP = "polygon(12% 15%, 88% 6%, 88% 64%, 12% 52%)";
-
 function PeopleCard({ person }: { person: PersonCard }) {
   return (
     <Link href="/people" className="group block h-full">
       <div className={`relative w-full overflow-hidden ${CARD_ASPECT}`}>
-        {/* 1. Photo — clipped to the frame's transparent window so it can
-            never show through into the color face below. Hover zoom stays
-            inside this clip, so it can't spill outside the frame. */}
-        <div className="absolute inset-0 z-[1] overflow-hidden" style={{ clipPath: PHOTO_WINDOW_CLIP }}>
-          <Image
-            src={person.photo.src}
-            alt={person.photo.alt}
-            fill
-            sizes="(max-width: 768px) 80vw, 20vw"
-            className="object-cover transition-transform duration-[450ms] ease-out group-hover:scale-[1.03]"
-            style={{ objectPosition: person.photo.position ?? "center center" }}
-          />
-        </div>
-        {/* 2. Frame overlay — true shape and aspect ratio, no CSS scale or
-            distortion */}
+        {/* 1. Photo — full card, no clip-path. The new frame PNG is fully
+            opaque below the window (bordeaux/navy color face), so the
+            frame alone hides the lower half of the photo — a separate
+            clip-path is redundant and was the source of the thin white
+            seam along the window edge. A 1px inset overscan (not a scale)
+            keeps antialiasing from ever showing a sliver of the card's own
+            background between photo and frame. */}
+        <Image
+          src={person.photo.src}
+          alt={person.photo.alt}
+          fill
+          sizes="(max-width: 768px) 80vw, 20vw"
+          className="z-[1] object-cover transition-transform duration-[450ms] ease-out group-hover:scale-[1.03]"
+          style={{ objectPosition: person.photo.position ?? "center center", inset: "-1px" }}
+        />
+        {/* 2. Frame overlay — true shape and aspect ratio, no CSS scale,
+            clip-path, or distortion */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={frameSrc[person.colorVariant]}
@@ -53,8 +48,10 @@ function PeopleCard({ person }: { person: PersonCard }) {
           className="pointer-events-none absolute inset-0 z-[2] h-full w-full object-contain"
         />
         {/* 3. Text — sits on the frame's color face, well below the
-            window's lowest point so it never overlaps the photo */}
-        <div className="absolute inset-x-5 top-[68%] bottom-6 z-[3] flex flex-col justify-between text-white">
+            window's lowest point so it never overlaps the photo. Left/right
+            inset widened so no label (incl. the ones with an English "・")
+            can start flush with — or clip past — the card's own edge. */}
+        <div className="absolute left-6 right-5 top-[72%] bottom-6 z-[3] flex flex-col justify-between text-white">
           <div>
             <p className="text-[11px] font-semibold leading-[1.3] tracking-[0.13em]">{person.labelEn}</p>
             <p className="mt-1 text-[13px] font-medium leading-[1.5]">{person.labelJa}</p>
@@ -99,7 +96,7 @@ export default function People() {
         </div>
 
         {/* Desktop/tablet: tight non-scroll row of 5 */}
-        <div className="mt-4 hidden gap-[clamp(10px,0.9vw,16px)] sm:flex">
+        <div className="mt-4 hidden gap-[clamp(8px,0.65vw,12px)] sm:flex">
           {peopleCards.map((person) => (
             <div key={person.id} className="flex-1">
               <PeopleCard person={person} />

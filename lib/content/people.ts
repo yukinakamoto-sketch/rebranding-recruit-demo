@@ -23,7 +23,7 @@ export const peopleCards: PersonCard[] = [
     photo: {
       src: "/images/recruit/people/people-01.png",
       alt: "窓辺に立つ紳士服姿の男性社員",
-      position: "50% 34%",
+      position: "50% 32%",
     },
   },
   {
@@ -36,7 +36,7 @@ export const peopleCards: PersonCard[] = [
     photo: {
       src: "/images/recruit/people/people-02.png",
       alt: "窓辺に立つ若手ビジネスウーマン",
-      position: "50% 33%",
+      position: "50% 32%",
     },
   },
   {
@@ -49,7 +49,7 @@ export const peopleCards: PersonCard[] = [
     photo: {
       src: "/images/recruit/people/people-03.png",
       alt: "資料を確認するクリエイティブ職の社員",
-      position: "50% 38%",
+      position: "50% 37%",
     },
   },
   {
@@ -62,7 +62,7 @@ export const peopleCards: PersonCard[] = [
     photo: {
       src: "/images/recruit/people/people-04.png",
       alt: "窓辺に立つ洗練されたビジネスウーマン",
-      position: "50% 34%",
+      position: "50% 32%",
     },
   },
   {
@@ -75,7 +75,7 @@ export const peopleCards: PersonCard[] = [
     photo: {
       src: "/images/recruit/people/people-05.png",
       alt: "モダンオフィスで微笑む男性社員",
-      position: "50% 33%",
+      position: "50% 31%",
     },
   },
 ];
