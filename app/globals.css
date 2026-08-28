@@ -2,25 +2,190 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1e1e1e;
+
+  /* Brand colors */
+  --color-bordeaux: #611b24;
+  --color-bordeaux-light: #7f2c37;
+  --color-bordeaux-dark: #4f161d;
+  --color-navy: #132b50;
+  --color-navy-light: #1c3a68;
+  --color-section-gray: #f4f4f4;
+  --color-border: #d9d9d9;
+
+  /* Hero copy positioning (tune here without touching layout) */
+  --hero-copy-left: 6vw;
+  --hero-copy-top: 62%;
+  --hero-copy-max-width: 560px;
+
+  /*
+   * Typography roles — the whole site is unified on one editorial serif
+   * family (Noto Serif JP, loaded via next/font as --font-serif-jp on
+   * <html>); --font-display-ja and --font-body-ja both resolve through that
+   * SAME webfont var so nav, body copy, and display headings never fall
+   * back to different families — only font-weight/size/tracking vary per
+   * role. Both are defined via var(--font-serif-jp, <fallbacks>) — NEVER
+   * var(--font-display-ja) / var(--font-body-ja) referencing themselves,
+   * which is an invalid CSS custom-property cycle (silently falls back to
+   * the browser default font with no error).
+   * --font-serif       : English/latin serif accent (logo wordmark, etc).
+   */
+  --font-display-ja: var(--font-serif-jp, "Noto Serif JP", "Yu Mincho",
+    YuMincho, "Hiragino Mincho ProN", serif);
+  --font-body-ja: var(--font-serif-jp, "Noto Serif JP", "Yu Mincho", YuMincho,
+    "Hiragino Mincho ProN", serif);
+  --font-serif: Georgia, "Times New Roman", serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bordeaux: var(--color-bordeaux);
+  --color-bordeaux-light: var(--color-bordeaux-light);
+  --color-bordeaux-dark: var(--color-bordeaux-dark);
+  --color-navy: var(--color-navy);
+  --color-navy-light: var(--color-navy-light);
+  --color-section-gray: var(--color-section-gray);
+  --color-border: var(--color-border);
+  --font-sans: var(--font-body-ja);
+  --font-display-ja: var(--font-serif-jp, "Noto Serif JP", "Yu Mincho",
+    YuMincho, "Hiragino Mincho ProN", serif);
+  --font-body-ja: var(--font-serif-jp, "Noto Serif JP", "Yu Mincho", YuMincho,
+    "Hiragino Mincho ProN", serif);
+  --font-serif: var(--font-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   Motion system: scroll reveal + HERO entrance + hover moves.
+   Every rule below has a static, fully-visible baseline so
+   prefers-reduced-motion (and pre-hydration/no-JS paint) never
+   shows hidden content — animation only layers on top of that.
+   ============================================================ */
+
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroSlitIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroImageSettle {
+  from { transform: scale(1.02); }
+  to { transform: scale(1); }
+}
+@keyframes heroArcIn {
+  from { opacity: 0; }
+  to { opacity: 0.3; }
+}
+@keyframes heroLineIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll-triggered fade-up (used by <Reveal>) */
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 700ms ease-out, transform 700ms ease-out;
+  }
+  .reveal.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* HERO entrance sequence — static-visible baseline, animated only when motion is allowed */
+.hero-anim-eyebrow,
+.hero-anim-headline,
+.hero-anim-body,
+.hero-anim-scroll,
+.hero-slit-reveal {
+  opacity: 1;
+  transform: none;
+}
+.hero-decor-arc { opacity: 0.3; }
+.hero-decor-line,
+.hero-decor-watermark { opacity: 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-anim-eyebrow {
+    opacity: 0;
+    animation: heroFadeIn 500ms ease-out forwards;
+  }
+  .hero-anim-headline {
+    opacity: 0;
+    animation: heroFadeUp 700ms ease-out forwards;
+    animation-delay: 320ms;
+  }
+  .hero-anim-body {
+    opacity: 0;
+    animation: heroFadeUp 600ms ease-out forwards;
+    animation-delay: 520ms;
+  }
+  .hero-anim-scroll {
+    opacity: 0;
+    animation: heroFadeIn 500ms ease-out forwards;
+    animation-delay: 680ms;
+  }
+  .hero-slit-reveal {
+    opacity: 0;
+    animation: heroSlitIn 600ms ease-out forwards;
+  }
+  .hero-image-settle {
+    animation: heroImageSettle 1700ms ease-out forwards;
+  }
+  .hero-decor-arc {
+    opacity: 0;
+    animation: heroArcIn 1000ms ease-out forwards;
+  }
+  .hero-decor-line {
+    opacity: 0;
+    animation: heroLineIn 900ms ease-out forwards;
+  }
+  .hero-decor-watermark {
+    opacity: 0;
+    animation: heroLineIn 1000ms ease-out forwards;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

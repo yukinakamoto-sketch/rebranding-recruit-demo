@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700">
+  <defs>
+    <linearGradient id="gaboutaboutlargesvg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#132B50" />
+      <stop offset="100%" stop-color="#274469" />
+    </linearGradient>
+  </defs>
+  <rect width="900" height="700" fill="url(#gaboutaboutlargesvg)" />
+  <rect x="0" y="0" width="180" height="700" fill="#FFFFFF" opacity="0.05" /><rect x="180" y="0" width="180" height="700" fill="#FFFFFF" opacity="0.09" /><rect x="360" y="0" width="180" height="700" fill="#FFFFFF" opacity="0.05" /><rect x="540" y="0" width="180" height="700" fill="#FFFFFF" opacity="0.09" /><rect x="720" y="0" width="180" height="700" fill="#FFFFFF" opacity="0.05" />
+  
+  <g transform="translate(450 434) scale(2.6923076923076925)" fill="#FFFFFF" opacity="0.3">
+    <rect x="-90" y="-20" width="40" height="120" />
+    <rect x="-40" y="-70" width="50" height="170" />
+    <rect x="20" y="-40" width="40" height="140" />
+    <rect x="70" y="10" width="30" height="90" />
+  </g>
+</svg>

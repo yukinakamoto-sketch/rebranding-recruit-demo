@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <defs>
+    <linearGradient id="grecruitrecruitrequirementssvg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#132B50" />
+      <stop offset="100%" stop-color="#274469" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="520" fill="url(#grecruitrecruitrequirementssvg)" />
+  <rect x="0" y="0" width="160" height="520" fill="#FFFFFF" opacity="0.05" /><rect x="160" y="0" width="160" height="520" fill="#FFFFFF" opacity="0.09" /><rect x="320" y="0" width="160" height="520" fill="#FFFFFF" opacity="0.05" /><rect x="480" y="0" width="160" height="520" fill="#FFFFFF" opacity="0.09" /><rect x="640" y="0" width="160" height="520" fill="#FFFFFF" opacity="0.05" />
+  
+  <g transform="translate(400 260) scale(2.3636363636363638)" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.4">
+    <rect x="-60" y="-45" width="120" height="80" rx="4" />
+    <line x1="-20" y1="35" x2="20" y2="35" />
+    <line x1="0" y1="35" x2="0" y2="50" />
+    <polyline points="-40,-5 -15,15 0,-10 40,-25" stroke-width="5" />
+  </g>
+</svg>

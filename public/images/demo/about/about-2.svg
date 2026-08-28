@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="380" viewBox="0 0 620 380">
+  <defs>
+    <linearGradient id="gaboutabout2svg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#132B50" />
+      <stop offset="100%" stop-color="#274469" />
+    </linearGradient>
+  </defs>
+  <rect width="620" height="380" fill="url(#gaboutabout2svg)" />
+  <rect x="0" y="0" width="124" height="380" fill="#FFFFFF" opacity="0.05" /><rect x="124" y="0" width="124" height="380" fill="#FFFFFF" opacity="0.09" /><rect x="248" y="0" width="124" height="380" fill="#FFFFFF" opacity="0.05" /><rect x="372" y="0" width="124" height="380" fill="#FFFFFF" opacity="0.09" /><rect x="496" y="0" width="124" height="380" fill="#FFFFFF" opacity="0.05" />
+  
+  <g transform="translate(235.6 228) scale(1.2666666666666666)" fill="#FFFFFF" opacity="0.35">
+    <circle cx="0" cy="-58" r="34" />
+    <path d="M -70 90 C -70 10 -40 -20 0 -20 C 40 -20 70 10 70 90 Z" />
+  </g>
+  <g transform="translate(409.20000000000005 209.00000000000003) scale(1.1176470588235294)" fill="#FFFFFF" opacity="0.28">
+    <circle cx="0" cy="-58" r="34" />
+    <path d="M -70 90 C -70 10 -40 -20 0 -20 C 40 -20 70 10 70 90 Z" />
+  </g>
+</svg>

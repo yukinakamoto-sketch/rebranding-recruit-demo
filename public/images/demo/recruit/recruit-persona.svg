@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <defs>
+    <linearGradient id="grecruitrecruitpersonasvg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#611B24" />
+      <stop offset="100%" stop-color="#7F2C37" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="520" fill="url(#grecruitrecruitpersonasvg)" />
+  <rect x="0" y="0" width="160" height="520" fill="#FFFFFF" opacity="0.05" /><rect x="160" y="0" width="160" height="520" fill="#FFFFFF" opacity="0.09" /><rect x="320" y="0" width="160" height="520" fill="#FFFFFF" opacity="0.05" /><rect x="480" y="0" width="160" height="520" fill="#FFFFFF" opacity="0.09" /><rect x="640" y="0" width="160" height="520" fill="#FFFFFF" opacity="0.05" />
+  
+  <g transform="translate(400 301.59999999999997) scale(2)" fill="#FFFFFF" opacity="0.35">
+    <circle cx="0" cy="-58" r="34" />
+    <path d="M -70 90 C -70 10 -40 -20 0 -20 C 40 -20 70 10 70 90 Z" />
+  </g>
+</svg>
