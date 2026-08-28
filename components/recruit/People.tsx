@@ -51,7 +51,7 @@ function PeopleCard({ person }: { person: PersonCard }) {
             window's lowest point so it never overlaps the photo. Left/right
             inset widened so no label (incl. the ones with an English "・")
             can start flush with — or clip past — the card's own edge. */}
-        <div className="absolute left-6 right-5 top-[72%] bottom-6 z-[3] flex flex-col justify-between text-white">
+        <div className="absolute left-6 right-6 top-[calc(72%+10px)] bottom-[30px] z-[3] flex flex-col justify-between gap-6 text-white">
           <div>
             <p className="text-[11px] font-semibold leading-[1.3] tracking-[0.13em]">{person.labelEn}</p>
             <p className="mt-1 text-[13px] font-medium leading-[1.5]">{person.labelJa}</p>
@@ -96,7 +96,7 @@ export default function People() {
         </div>
 
         {/* Desktop/tablet: tight non-scroll row of 5 */}
-        <div className="mt-4 hidden gap-[clamp(8px,0.65vw,12px)] sm:flex">
+        <div className="mt-4 hidden gap-[clamp(6px,0.5vw,10px)] sm:flex">
           {peopleCards.map((person) => (
             <div key={person.id} className="flex-1">
               <PeopleCard person={person} />
