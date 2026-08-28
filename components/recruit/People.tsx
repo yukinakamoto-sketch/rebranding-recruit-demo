@@ -7,23 +7,25 @@ import "swiper/css";
 import { peopleCards, peopleCopy, type PersonCard } from "@/lib/content/people";
 import Reveal from "@/components/recruit/Reveal";
 
-// Frame PNGs are the shape of truth now — object-fit:fill deliberately
-// conforms each frame to the shared card aspect ratio (below) so all 5
-// cards stay exactly the same height, even though the two source PNGs
-// differ very slightly in their own native aspect ratio.
 const frameSrc: Record<PersonCard["colorVariant"], string> = {
   bordeaux: "/images/recruit/people/frame-bordeaux.png",
   navy: "/images/recruit/people/frame-navy.png",
 };
 
 // Card aspect ratio taken from the bordeaux frame's native size (948x1659).
+// The navy frame's native ratio (941x1672) is very slightly different —
+// object-contain on the frame <img> below lets it sit undistorted inside
+// this shared canvas instead of being stretched to match.
 const CARD_ASPECT = "aspect-[948/1659]";
 
 function PeopleCard({ person }: { person: PersonCard }) {
   return (
     <Link href="/people" className="group block h-full">
       <div className={`relative w-full overflow-hidden ${CARD_ASPECT}`}>
-        {/* 1. Photo — behind everything */}
+        {/* 1. Photo — fills the whole card. No separate clip-path: the
+            frame's own alpha channel (below) is the single source of truth
+            for the visible window shape, so photo and frame can never
+            drift out of alignment, even when the frame is scaled up. */}
         <Image
           src={person.photo.src}
           alt={person.photo.alt}
@@ -32,22 +34,27 @@ function PeopleCard({ person }: { person: PersonCard }) {
           className="z-[1] object-cover transition-transform duration-[450ms] ease-out group-hover:scale-[1.03]"
           style={{ objectPosition: person.photo.position ?? "center center" }}
         />
-        {/* 2. Frame overlay — the card's actual visible shape */}
+        {/* 2. Frame overlay — the card's actual visible shape. Scaled up
+            slightly (uniform, no distortion) to push the PNG's own outer
+            transparent margin outside the card, so the drawn frame edge
+            sits close to the card edge instead of leaving dead space that
+            reads as extra gap between cards. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={frameSrc[person.colorVariant]}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-[2] h-full w-full object-fill"
+          className="pointer-events-none absolute inset-0 z-[2] h-full w-full origin-center scale-105 object-contain lg:scale-110"
         />
-        {/* 3. Text — on top of the frame's color face */}
-        <div className="absolute inset-x-5 bottom-6 z-[3] flex flex-col justify-between text-white">
+        {/* 3. Text — sits on the frame's color face, well below the
+            window's lowest point so it never overlaps the photo */}
+        <div className="absolute inset-x-5 top-[68%] bottom-6 z-[3] flex flex-col justify-between text-white">
           <div>
             <p className="text-[11px] font-semibold leading-[1.3] tracking-[0.13em]">{person.labelEn}</p>
             <p className="mt-1 text-[13px] font-medium leading-[1.5]">{person.labelJa}</p>
             <p className="mt-1 text-[11px] font-normal text-white/85">{person.year}</p>
           </div>
-          <p className="mt-8 whitespace-pre-line text-[14px] font-medium leading-[1.7]">{person.message}</p>
+          <p className="whitespace-pre-line text-[14px] font-medium leading-[1.7]">{person.message}</p>
         </div>
       </div>
     </Link>
@@ -86,7 +93,7 @@ export default function People() {
         </div>
 
         {/* Desktop/tablet: tight non-scroll row of 5 */}
-        <div className="mt-4 hidden gap-[10px] sm:flex">
+        <div className="mt-4 hidden gap-[clamp(12px,1vw,18px)] sm:flex">
           {peopleCards.map((person) => (
             <div key={person.id} className="flex-1">
               <PeopleCard person={person} />
