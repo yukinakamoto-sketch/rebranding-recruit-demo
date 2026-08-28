@@ -10,6 +10,11 @@ export type PersonCard = {
   message: string;
   colorVariant: ColorVariant;
   photo: { src: string; alt: string; position?: string };
+  // Pre-composited "photo + diagonal frame + color face" panel used by the
+  // TOP page's PEOPLE section (components/recruit/People.tsx). All 5 share
+  // the same native size (1024x1536). The plain `photo` field above is kept
+  // for the /people sub-page's separate plain photo grid — do not remove it.
+  cardImage: { src: string; alt: string };
 };
 
 export const peopleCards: PersonCard[] = [
@@ -25,6 +30,10 @@ export const peopleCards: PersonCard[] = [
       alt: "窓辺に立つ紳士服姿の男性社員",
       position: "50% 32%",
     },
+    cardImage: {
+      src: "/images/recruit/people/people-card-01.png",
+      alt: "窓辺に立つ紳士服姿の男性社員",
+    },
   },
   {
     id: "content-seo",
@@ -37,6 +46,10 @@ export const peopleCards: PersonCard[] = [
       src: "/images/recruit/people/people-02.png",
       alt: "窓辺に立つ若手ビジネスウーマン",
       position: "50% 32%",
+    },
+    cardImage: {
+      src: "/images/recruit/people/people-card-02.png",
+      alt: "窓辺に立つ若手ビジネスウーマン",
     },
   },
   {
@@ -51,6 +64,10 @@ export const peopleCards: PersonCard[] = [
       alt: "資料を確認するクリエイティブ職の社員",
       position: "54% 37%",
     },
+    cardImage: {
+      src: "/images/recruit/people/people-card-03.png",
+      alt: "資料を確認するクリエイティブ職の社員",
+    },
   },
   {
     id: "marketing",
@@ -64,6 +81,10 @@ export const peopleCards: PersonCard[] = [
       alt: "窓辺に立つ洗練されたビジネスウーマン",
       position: "46% 32%",
     },
+    cardImage: {
+      src: "/images/recruit/people/people-card-04.png",
+      alt: "窓辺に立つ洗練されたビジネスウーマン",
+    },
   },
   {
     id: "corporate",
@@ -76,6 +97,10 @@ export const peopleCards: PersonCard[] = [
       src: "/images/recruit/people/people-05.png",
       alt: "モダンオフィスで微笑む男性社員",
       position: "46% 31%",
+    },
+    cardImage: {
+      src: "/images/recruit/people/people-card-05.png",
+      alt: "モダンオフィスで微笑む男性社員",
     },
   },
 ];
