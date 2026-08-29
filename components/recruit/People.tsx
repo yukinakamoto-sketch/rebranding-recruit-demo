@@ -45,7 +45,7 @@ function PeopleCard({ person }: { person: PersonCard }) {
             top:auto) — each sets only the one edge it cares about. */}
         <div
           className="pointer-events-none z-[1] text-white"
-          style={{ position: "absolute", left: "6%", right: "6%", top: "58%", bottom: "auto" }}
+          style={{ position: "absolute", left: "6%", right: "6%", top: "63%", bottom: "auto" }}
         >
           <p className="font-semibold" style={{ fontSize: "12px", lineHeight: 1.15, letterSpacing: "0.1em" }}>
             {person.labelEn}
