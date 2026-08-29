@@ -123,21 +123,11 @@ export default function Hero() {
             className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/35 to-transparent"
           />
 
-          {/* Right-edge watermark: a large, low-opacity vertical "REBRANDING"
-              anchored bottom-right, reading upward — a quiet background
-              brand graphic, not meant to be read closely. Deliberately NOT
-              a flex container: writing-mode:vertical-rl combined with
-              display:flex on the same text-only element can collapse the
-              box to zero width in some engines, which is why the previous
-              version silently disappeared. Plain absolute + natural
-              vertical-rl sizing only. */}
-          <span
-            aria-hidden
-            className="pointer-events-none absolute right-3 bottom-6 z-[5] whitespace-nowrap text-[28px] font-semibold leading-[0.95] tracking-[0.15em] text-white opacity-20 lg:right-4 lg:bottom-8 lg:text-[clamp(34px,4.2vw,64px)]"
-            style={{ writingMode: "vertical-rl" }}
-          >
-            {heroCopy.eyebrowEn}
-          </span>
+          {/* The right-edge "REBRANDING" watermark used to live here,
+              scoped to the FV only. It's now a page-wide fixed element
+              (components/recruit/SiteWatermark.tsx, mounted once in
+              app/layout.tsx) that stays on screen through every section —
+              removed from here so it isn't rendered twice over the FV. */}
         </div>
       </div>
     </section>

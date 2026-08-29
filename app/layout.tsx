@@ -3,6 +3,7 @@ import { Noto_Serif_JP } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/recruit/Header";
 import Footer from "@/components/recruit/Footer";
+import SiteWatermark from "@/components/recruit/SiteWatermark";
 
 // Editorial display serif for HERO / PEOPLE headings only — kept separate
 // from the sans body/nav typeface. `display: swap` + Google's per-glyph
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <SiteWatermark />
       </body>
     </html>
   );
