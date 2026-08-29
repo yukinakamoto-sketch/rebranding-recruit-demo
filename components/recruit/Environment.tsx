@@ -3,8 +3,8 @@ import Reveal from "@/components/recruit/Reveal";
 
 function Icon({ name }: { name: EnvironmentItem["icon"] }) {
   const common = {
-    width: 46,
-    height: 46,
+    width: 42,
+    height: 42,
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "var(--color-navy)",
@@ -38,15 +38,20 @@ function Icon({ name }: { name: EnvironmentItem["icon"] }) {
 
 export default function Environment() {
   return (
-    <section className="bg-[var(--color-section-gray)] py-11 md:py-16">
+    <section className="bg-[#F5F4F2] py-11 md:py-16">
       <div className="mx-auto max-w-[1600px] px-5 md:px-10">
-        <h2 className="font-display-ja text-[26px] font-semibold tracking-[0.02em] text-[var(--color-navy)] md:text-[32px]">働く環境</h2>
+        <h2 className="font-display-ja text-[29px] font-semibold tracking-[0.02em] text-[var(--color-navy)] md:text-[35px]">働く環境</h2>
 
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-10">
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
           {environmentItems.map((item, i) => (
             <Reveal key={item.title} delay={i * 100}>
+              <span
+                aria-hidden
+                className="mb-4 block h-px w-7"
+                style={{ backgroundColor: i % 2 === 0 ? "var(--color-bordeaux)" : "var(--color-navy)" }}
+              />
               <Icon name={item.icon} />
-              <h3 className="mt-4 text-[19px] font-semibold tracking-[0.01em] text-[var(--color-navy)]">{item.title}</h3>
+              <h3 className="mt-4 text-[21px] font-semibold tracking-[0.01em] text-[var(--color-navy)]">{item.title}</h3>
               <p className="mt-4 text-sm leading-relaxed text-[#555555] whitespace-pre-line">
                 {item.description}
               </p>
