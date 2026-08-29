@@ -8,9 +8,13 @@ import { peopleCards, peopleCopy, type PersonCard } from "@/lib/content/people";
 import Reveal from "@/components/recruit/Reveal";
 
 // All 5 pre-composited card images ("photo + diagonal frame + color face")
-// share the same native size (1024x1536 = 2:3), so a single shared aspect
-// ratio renders every one of them pixel-perfect with zero letterbox.
-const CARD_ASPECT = "aspect-[1024/1536]";
+// have been trimmed to their real (alpha-based) content bounds — the source
+// PNGs had a large transparent margin around the panel (see
+// people-card-0N-original.png for the untrimmed 1024x1536 originals). Their
+// trimmed ratios land within ~0.354-0.390 (w/h); this shared box uses their
+// average (~0.368) so all 5 render at equal height with only a hair of
+// object-contain letterbox on the outliers, never distortion.
+const CARD_ASPECT = "aspect-[46/125]";
 
 function PeopleCard({ person }: { person: PersonCard }) {
   return (
@@ -29,11 +33,12 @@ function PeopleCard({ person }: { person: PersonCard }) {
         sizes="(max-width: 768px) 78vw, 18vw"
         className="object-contain"
       />
-      {/* Text — confined to the image's lower color face. Insets (14%/10%)
-          are tuned to the actual painted color-face bounds in the finished
-          card art so no glyph sits over the black background outside the
-          panel or over the diagonal cut above it. */}
-      <div className="pointer-events-none absolute left-[14%] right-[10%] top-[57%] bottom-[10%] z-[1] flex flex-col justify-between text-white">
+      {/* Text — confined to the image's lower color face. Now that the PNGs
+          are trimmed to their real content bounds, the color face runs
+          almost edge-to-edge (measured ~1-2% to ~99%, narrowing only in the
+          bottom-right diagonal corner), so a modest 9% inset is enough to
+          keep every glyph inside the panel. */}
+      <div className="pointer-events-none absolute left-[9%] right-[9%] top-[57%] bottom-[9%] z-[1] flex flex-col justify-between text-white">
         <div>
           <p className="text-[13px] font-semibold leading-[1.3] tracking-[0.13em]">{person.labelEn}</p>
           <p className="mt-1 text-[14px] font-medium leading-[1.5]">{person.labelJa}</p>
@@ -76,13 +81,13 @@ export default function People() {
           </p>
         </div>
 
-        {/* Desktop/tablet: 5 fixed-size cards, centered as a tight group
-            (not spread edge-to-edge) with a small fixed gap between them. */}
-        <div className="mt-[30px] hidden justify-center gap-[14px] overflow-x-auto sm:flex">
+        {/* Desktop/tablet: 5 equal-width columns, centered at 92% of the
+            section's inner width — plain grid, no CSS up-scaling. The
+            trimmed card art (see CARD_ASPECT above) is what makes these
+            render large now, not a width/scale hack on the layout. */}
+        <div className="mt-[30px] hidden w-[92%] mx-auto sm:grid grid-cols-5 gap-[12px]">
           {peopleCards.map((person) => (
-            <div key={person.id} className="w-[clamp(220px,15.5vw,235px)] flex-none">
-              <PeopleCard person={person} />
-            </div>
+            <PeopleCard key={person.id} person={person} />
           ))}
         </div>
 
