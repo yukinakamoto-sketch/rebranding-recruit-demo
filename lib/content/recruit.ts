@@ -8,7 +8,7 @@ export type RecruitCard = {
 export const recruitCards: RecruitCard[] = [
   {
     title: "求める人物像",
-    description: "変化を楽しみ、本質を\n追求できる人を求めています。",
+    description: "変化を楽しみ、本質を追求できる人を求めています。",
     image: {
       src: "/images/recruit/info/recruit-01-communication.png",
       alt: "社員同士のコミュニケーションの様子",
@@ -18,7 +18,7 @@ export const recruitCards: RecruitCard[] = [
   },
   {
     title: "募集要項",
-    description: "募集職種・雇用条件など、\n採用に関する詳細情報。",
+    description: "募集職種・雇用条件など、採用に関する詳細情報。",
     image: {
       src: "/images/recruit/info/recruit-02-environment.png",
       alt: "働く環境のイメージ",
@@ -28,7 +28,7 @@ export const recruitCards: RecruitCard[] = [
   },
   {
     title: "選考フロー",
-    description: "エントリーから内定までの\n流れをご案内します。",
+    description: "エントリーから内定までの流れをご案内します。",
     image: {
       src: "/images/recruit/info/recruit-03-career.png",
       alt: "若手社員のイメージ",

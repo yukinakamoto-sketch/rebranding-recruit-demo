@@ -36,7 +36,7 @@ export default function RecruitInfo() {
                 </div>
                 <div className="p-[18px] md:p-[22px]">
                   <h3 className="text-[19px] font-semibold text-[var(--color-navy)]">{card.title}</h3>
-                  <p className="mt-2 text-sm leading-[1.75] text-[#555555] whitespace-pre-line">
+                  <p className="text-jp-flow mt-2 text-sm leading-[1.75] text-[#555555]">
                     {card.description}
                   </p>
                   <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold tracking-[0.06em] text-[var(--color-bordeaux)]">

@@ -69,6 +69,18 @@ body {
   box-sizing: border-box;
 }
 
+/* Natural Japanese line-wrapping for body copy that no longer carries
+   manual \n breaks (see components/recruit/{About,Work,Environment,
+   RecruitInfo}.tsx) — lets the browser fold at container width instead,
+   while line-break:strict avoids leaving a lone punctuation mark or
+   single-character particle stranded at a line start/end. */
+.text-jp-flow {
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  line-break: strict;
+}
+
 /* ============================================================
    Motion system: scroll reveal + HERO entrance + hover moves.
    Every rule below has a static, fully-visible baseline so

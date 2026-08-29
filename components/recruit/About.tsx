@@ -23,7 +23,7 @@ export default function About() {
             <span className="block">{aboutContent.titleLine1}</span>
             <span className="block">{aboutContent.titleLine2}</span>
           </h2>
-          <p className="mt-6 text-[13px] font-normal leading-[1.95] tracking-[0.02em] text-[#555555] md:text-[14px] whitespace-pre-line">
+          <p className="text-jp-flow mt-6 text-[13px] font-normal leading-[1.95] tracking-[0.02em] text-[#555555] md:text-[14px]">
             {aboutContent.body}
           </p>
         </div>

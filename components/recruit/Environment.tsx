@@ -52,7 +52,7 @@ export default function Environment() {
               />
               <Icon name={item.icon} />
               <h3 className="mt-4 text-[21px] font-semibold tracking-[0.01em] text-[var(--color-navy)]">{item.title}</h3>
-              <p className="mt-4 text-sm leading-relaxed text-[#555555] whitespace-pre-line">
+              <p className="text-jp-flow mt-4 text-sm leading-relaxed text-[#555555]">
                 {item.description}
               </p>
             </Reveal>

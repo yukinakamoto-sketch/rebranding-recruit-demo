@@ -8,7 +8,7 @@ export type WorkItem = {
 export const workItems: WorkItem[] = [
   {
     title: "コンサルティング",
-    description: "企業の課題を分析し、\nブランド戦略の設計を担う。",
+    description: "企業の課題を分析し、ブランド戦略の設計を担う。",
     image: {
       src: "/images/recruit/work/work-01-consulting.png",
       alt: "コンサルティング業務の様子",
@@ -18,7 +18,7 @@ export const workItems: WorkItem[] = [
   },
   {
     title: "コンテンツ・SEO",
-    description: "検索と人の心を動かす\nコンテンツを企画・制作。",
+    description: "検索と人の心を動かすコンテンツを企画・制作。",
     image: {
       src: "/images/recruit/work/work-02-digital.png",
       alt: "デジタル・分析業務の様子",
@@ -28,7 +28,7 @@ export const workItems: WorkItem[] = [
   },
   {
     title: "制作・クリエイティブ",
-    description: "デザインの力でブランドの\n価値を形にする。",
+    description: "デザインの力でブランドの価値を形にする。",
     image: {
       src: "/images/recruit/work/work-03-creative.png",
       alt: "クリエイティブ制作の様子",

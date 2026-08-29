@@ -35,7 +35,7 @@ export default function Work() {
                   />
                 </div>
                 <h3 className="mt-4 text-[19px] font-semibold text-[var(--color-navy)]">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#555555] whitespace-pre-line">
+                <p className="text-jp-flow mt-2 text-sm leading-relaxed text-[#555555]">
                   {item.description}
                 </p>
               </Link>
