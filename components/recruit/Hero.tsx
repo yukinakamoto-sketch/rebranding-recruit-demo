@@ -1,6 +1,24 @@
 import Image from "next/image";
 import { heroSlides, heroCopy } from "@/lib/content/hero";
 
+// Terms in heroCopy.bodyMain that must not split mid-word on PC (a plain
+// Japanese line-break can legally fall inside e.g. "デジ|タル戦略"). Wrapped
+// in md:whitespace-nowrap only — SP still wraps normally.
+const HERO_BODY_NOWRAP_TERMS = ["デジタル戦略", "企業の成長"];
+
+function withProtectedTerms(text: string, terms: string[]) {
+  const pattern = new RegExp(`(${terms.join("|")})`, "g");
+  return text.split(pattern).map((part, i) =>
+    terms.includes(part) ? (
+      <span key={i} className="md:whitespace-nowrap">
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+}
+
 export default function Hero() {
   return (
     <section id="hero" className="relative w-full bg-white">
@@ -46,8 +64,8 @@ export default function Hero() {
               )}
             </h1>
 
-            <p className="text-jp-flow hero-anim-body font-body-ja mt-7 max-w-[355px] text-[13px] font-normal leading-[1.95] tracking-[0.06em] text-white/85">
-              {heroCopy.bodyMain}
+            <p className="text-jp-flow hero-anim-body font-body-ja mt-7 max-w-[380px] text-[13px] font-normal leading-[1.95] tracking-[0.06em] text-white/85">
+              {withProtectedTerms(heroCopy.bodyMain, HERO_BODY_NOWRAP_TERMS)}
               <span className="md:whitespace-nowrap">{heroCopy.bodyEmphasis}</span>
             </p>
           </div>
