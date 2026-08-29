@@ -15,12 +15,12 @@ export default function SiteWatermark() {
   return (
     <span
       aria-hidden
-      className="pointer-events-none fixed top-1/2 right-[16px] z-20 hidden -translate-y-1/2 [writing-mode:vertical-rl] [text-orientation:mixed] select-none whitespace-nowrap font-semibold md:block"
+      className="pointer-events-none fixed top-1/2 right-[20px] z-20 hidden -translate-y-1/2 [writing-mode:vertical-rl] [text-orientation:mixed] select-none whitespace-nowrap font-semibold md:block"
       style={{
-        fontSize: "clamp(18px, 1.5vw, 22px)",
-        letterSpacing: "0.32em",
+        fontSize: "clamp(36px, 3vw, 46px)",
+        letterSpacing: "0.25em",
         lineHeight: 1.3,
-        color: "rgba(255,255,255,0.16)",
+        color: "rgba(255,255,255,0.11)",
         mixBlendMode: "difference",
       }}
     >
