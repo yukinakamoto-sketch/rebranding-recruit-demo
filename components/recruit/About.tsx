@@ -2,23 +2,18 @@ import Image from "next/image";
 import { aboutContent } from "@/lib/content/about";
 import Reveal from "@/components/recruit/Reveal";
 
-// Key multi-character terms that must not split mid-word on PC (a plain
-// Japanese line-break can legally fall inside e.g. "デジ|タル戦略"). Wrapped
-// in md:whitespace-nowrap only — SP gets ordinary wrapping, and everything
-// around these terms still wraps normally at any width.
-const NOWRAP_TERMS = ["デジタル戦略", "一気通貫"];
-
-function withProtectedTerms(text: string) {
-  const pattern = new RegExp(`(${NOWRAP_TERMS.join("|")})`, "g");
-  return text.split(pattern).map((part, i) =>
-    NOWRAP_TERMS.includes(part) ? (
-      <span key={i} className="md:whitespace-nowrap">
-        {part}
-      </span>
-    ) : (
-      part
-    )
-  );
+// Each paragraph is pre-split (lib/content/about.ts) into "meaning unit"
+// chunks. On PC each chunk becomes its own inline-block + nowrap box, so a
+// line can only break BETWEEN chunks, never inside one — e.g. "コンテンツ
+// 制作" can't split as "コンテンツ｜制作" even though the browser is free
+// to wrap right before or after that whole chunk. On SP the chunks fall
+// back to plain inline text and wrap freely within themselves too.
+function renderChunkedParagraph(chunks: string[]) {
+  return chunks.map((chunk, i) => (
+    <span key={i} className="md:inline-block md:whitespace-nowrap">
+      {chunk}
+    </span>
+  ));
 }
 
 export default function About() {
@@ -34,7 +29,7 @@ export default function About() {
       />
 
       <Reveal className="relative mx-auto grid max-w-[1600px] grid-cols-1 items-center gap-10 px-5 md:px-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-        <div>
+        <div className="max-w-[650px]">
           <p className="text-[11px] font-semibold tracking-[0.16em] text-[var(--color-bordeaux)] md:text-[12px]">
             {aboutContent.label}
           </p>
@@ -43,12 +38,12 @@ export default function About() {
             <span className="block">{aboutContent.titleLine2}</span>
           </h2>
           <div className="mt-6 space-y-[6px]">
-            {aboutContent.bodyParagraphs.map((paragraph, i) => (
+            {aboutContent.bodyParagraphChunks.map((chunks, i) => (
               <p
                 key={i}
                 className="text-jp-flow text-[13px] font-normal leading-[1.95] tracking-[0.02em] text-[#555555] md:text-[14px]"
               >
-                {withProtectedTerms(paragraph)}
+                {renderChunkedParagraph(chunks)}
               </p>
             ))}
           </div>
