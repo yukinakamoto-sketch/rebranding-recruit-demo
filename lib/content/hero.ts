@@ -54,7 +54,12 @@ export const heroCopy = {
   headlineLines: ["AI時代の", "ブランドを、", "つくる側へ。"] as const,
   /** Index of the headline line rendered as a white highlight block (bordeaux text). */
   highlightIndex: 2,
-  body: "リブランディングは、検索・評判・ブランディング・デジタル戦略の力で、企業の成長に伴走するパートナーです。",
+  // Split so the component can keep "パートナーです。" from breaking
+  // mid-word on PC (md:whitespace-nowrap) — same sentence, same wording,
+  // just split at a natural clause boundary so the two pieces can wrap
+  // independently.
+  bodyMain: "リブランディングは、検索・評判・ブランディング・デジタル戦略の力で、企業の成長に伴走する",
+  bodyEmphasis: "パートナーです。",
   scrollLabel: "SCROLL DOWN",
   /**
    * Background photo for the HERO left (bordeaux) panel. Falls back to the

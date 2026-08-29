@@ -38,11 +38,11 @@ export default function Numbers() {
               className="py-8 sm:py-2 sm:px-8 first:pl-0 sm:first:pl-0"
             >
               <div className="text-[var(--color-navy)]">{icons[i]}</div>
-              <p className="mt-4 text-sm text-[#555555]">{item.label}</p>
+              <p className="text-jp-flow mt-4 text-sm text-[#555555]">{item.label}</p>
               <p className="font-display-ja mt-2 text-[50px] leading-none font-semibold tracking-[0.01em] text-[var(--color-bordeaux)] md:text-[70px]">
                 {item.value}
               </p>
-              <p className="mt-3 text-xs md:text-sm text-[#555555]">{item.caption}</p>
+              <p className="text-jp-flow mt-3 text-xs md:text-sm text-[#555555]">{item.caption}</p>
             </Reveal>
           ))}
         </div>

@@ -2,6 +2,25 @@ import Image from "next/image";
 import { aboutContent } from "@/lib/content/about";
 import Reveal from "@/components/recruit/Reveal";
 
+// Key multi-character terms that must not split mid-word on PC (a plain
+// Japanese line-break can legally fall inside e.g. "ブランド価|値"). Wrapped
+// in md:whitespace-nowrap only — SP gets ordinary wrapping, and everything
+// around these terms still wraps normally at any width.
+const NOWRAP_TERMS = ["ブランド価値", "デジタル戦略", "一気通貫", "クライアントの成長"];
+
+function withProtectedTerms(text: string) {
+  const pattern = new RegExp(`(${NOWRAP_TERMS.join("|")})`, "g");
+  return text.split(pattern).map((part, i) =>
+    NOWRAP_TERMS.includes(part) ? (
+      <span key={i} className="md:whitespace-nowrap">
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+}
+
 export default function About() {
   return (
     <section className="relative overflow-hidden bg-[var(--color-section-gray)] py-16 md:py-24">
@@ -23,9 +42,16 @@ export default function About() {
             <span className="block">{aboutContent.titleLine1}</span>
             <span className="block">{aboutContent.titleLine2}</span>
           </h2>
-          <p className="text-jp-flow mt-6 text-[13px] font-normal leading-[1.95] tracking-[0.02em] text-[#555555] md:text-[14px]">
-            {aboutContent.body}
-          </p>
+          <div className="mt-6 space-y-[6px]">
+            {aboutContent.bodyParagraphs.map((paragraph, i) => (
+              <p
+                key={i}
+                className="text-jp-flow text-[13px] font-normal leading-[1.95] tracking-[0.02em] text-[#555555] md:text-[14px]"
+              >
+                {withProtectedTerms(paragraph)}
+              </p>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-[1.1fr_1fr] gap-3 md:gap-4">

@@ -25,7 +25,7 @@ export default function AboutPage() {
               <span className="block">{aboutContent.titleLine2}</span>
             </h2>
             <p className="mt-6 text-sm md:text-base leading-loose text-[#555555] whitespace-pre-line">
-              {aboutContent.body}
+              {aboutContent.bodyParagraphs.join("\n")}
             </p>
           </div>
           <div className="relative aspect-[4/3]">

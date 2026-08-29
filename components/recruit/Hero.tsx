@@ -46,8 +46,9 @@ export default function Hero() {
               )}
             </h1>
 
-            <p className="hero-anim-body font-body-ja mt-7 max-w-[340px] text-[13px] font-normal leading-[1.95] tracking-[0.06em] text-white/85">
-              {heroCopy.body}
+            <p className="text-jp-flow hero-anim-body font-body-ja mt-7 max-w-[355px] text-[13px] font-normal leading-[1.95] tracking-[0.06em] text-white/85">
+              {heroCopy.bodyMain}
+              <span className="md:whitespace-nowrap">{heroCopy.bodyEmphasis}</span>
             </p>
           </div>
 
