@@ -43,8 +43,8 @@ function PeopleCard({ person }: { person: PersonCard }) {
         <p className="mt-1 text-[15px] font-semibold leading-[1.4]">{person.labelJa}</p>
         <p className="mt-1 text-[12px] font-normal leading-[1.4] text-white/85">{person.year}</p>
       </div>
-      <div className="pointer-events-none absolute left-[7%] right-[8%] bottom-[8%] z-[1] text-white">
-        <p className="whitespace-pre-line text-[14px] font-medium leading-[1.6]">{person.message}</p>
+      <div className="pointer-events-none absolute left-[7%] right-[8%] bottom-[8.5%] z-[1] text-white">
+        <p className="whitespace-pre-line text-[14px] font-medium leading-[1.45]">{person.message}</p>
       </div>
     </Link>
   );
