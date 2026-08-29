@@ -72,7 +72,7 @@ function PeopleCard({ person }: { person: PersonCard }) {
 
 export default function People() {
   return (
-    <section className="relative overflow-hidden bg-[var(--color-section-gray)] pt-16 pb-20 md:pt-24 md:pb-[188px]">
+    <section className="relative overflow-hidden bg-[var(--color-section-gray)] pt-16 pb-[70px] md:pt-24 md:pb-[164px]">
       {/* Corner wedges: bordeaux (left) / navy (right), asymmetric — right is intentionally larger to visually hand off to the navy RECRUIT section below. Sizes: 64x54/94x58 on mobile, then clamp()-scaled from tablet up (≈105x92 @1280, ≈118x104 @1440, capped by the clamp max above ~1920) */}
       <span
         aria-hidden
@@ -96,7 +96,7 @@ export default function People() {
             </h2>
             <span aria-hidden className="mt-3 block h-[2px] w-10 bg-[var(--color-bordeaux)]" />
           </div>
-          <p className="max-w-[410px] text-[12px] leading-[1.9] tracking-[0.04em] text-[#555555] md:text-right">
+          <p className="max-w-[410px] text-[13.5px] leading-[1.7] tracking-[0.04em] text-[#555555] md:text-right">
             {peopleCopy.lead}
           </p>
         </div>
@@ -105,7 +105,7 @@ export default function People() {
             columns — each card's width is left to its own trimmed image
             ratio (see PeopleCard's peopleCardVisual) instead of being
             stretched/squashed to a shared column width. */}
-        <div className="mt-[30px] hidden items-start justify-center gap-[14px] sm:flex">
+        <div className="mt-[30px] hidden items-start justify-center gap-[12px] sm:flex">
           {peopleCards.map((person) => (
             <PeopleCard key={person.id} person={person} />
           ))}
