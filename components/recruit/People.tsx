@@ -29,19 +29,17 @@ function PeopleCard({ person }: { person: PersonCard }) {
         sizes="(max-width: 768px) 78vw, 18vw"
         className="object-contain"
       />
-      {/* Text — confined to the image's lower color face. Insets (20%/20%)
+      {/* Text — confined to the image's lower color face. Insets (14%/10%)
           are tuned to the actual painted color-face bounds in the finished
-          card art (measured ~14-20% from the left, ~66-82% from the left on
-          the right side, depending on the card and how low the diagonal cut
-          runs) rather than a generic 8%, so no glyph sits over the black
-          background outside the panel. */}
-      <div className="pointer-events-none absolute left-[20%] right-[20%] top-[58%] bottom-[8%] z-[1] flex flex-col justify-between text-white">
+          card art so no glyph sits over the black background outside the
+          panel or over the diagonal cut above it. */}
+      <div className="pointer-events-none absolute left-[14%] right-[10%] top-[57%] bottom-[10%] z-[1] flex flex-col justify-between text-white">
         <div>
-          <p className="text-[14px] font-semibold leading-[1.3] tracking-[0.13em]">{person.labelEn}</p>
-          <p className="mt-1 text-[15px] font-medium leading-[1.5]">{person.labelJa}</p>
-          <p className="mt-1 text-[12px] font-normal text-white/85">{person.year}</p>
+          <p className="text-[13px] font-semibold leading-[1.3] tracking-[0.13em]">{person.labelEn}</p>
+          <p className="mt-1 text-[14px] font-medium leading-[1.5]">{person.labelJa}</p>
+          <p className="mt-1 text-[11px] font-normal text-white/85">{person.year}</p>
         </div>
-        <p className="whitespace-pre-line text-[16px] font-medium leading-[1.6]">{person.message}</p>
+        <p className="whitespace-pre-line text-[15px] font-medium leading-[1.6]">{person.message}</p>
       </div>
     </Link>
   );
@@ -78,16 +76,14 @@ export default function People() {
           </p>
         </div>
 
-        {/* Desktop/tablet: tight non-scroll row of 5, equal-width columns.
-            Breaks out of the section's max-w-[1600px]/px container so the row
-            can use 95% of the full section width instead of being capped by
-            the same padding as the heading/lead text above it. */}
-        <div className="relative left-1/2 mt-[28px] hidden w-screen -translate-x-1/2 sm:block">
-          <div className="mx-auto grid w-[95%] max-w-none grid-cols-5 gap-[7px]">
-            {peopleCards.map((person) => (
-              <PeopleCard key={person.id} person={person} />
-            ))}
-          </div>
+        {/* Desktop/tablet: 5 fixed-size cards, centered as a tight group
+            (not spread edge-to-edge) with a small fixed gap between them. */}
+        <div className="mt-[30px] hidden justify-center gap-[14px] overflow-x-auto sm:flex">
+          {peopleCards.map((person) => (
+            <div key={person.id} className="w-[clamp(220px,15.5vw,235px)] flex-none">
+              <PeopleCard person={person} />
+            </div>
+          ))}
         </div>
 
         {/* Mobile: Swiper slider, next card peeking */}
