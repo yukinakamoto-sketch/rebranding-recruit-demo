@@ -33,18 +33,32 @@ function PeopleCard({ person }: { person: PersonCard }) {
         sizes="(max-width: 768px) 78vw, 18vw"
         className="object-contain"
       />
-      {/* Text — two independently bottom-anchored blocks (not a single
-          flex-col justify-between box) so every card lines up on the same
-          left edge and the same distance-from-bottom, regardless of how
-          much the eyebrow/label wraps. Both sit inside the color face,
-          clear of the diagonal cut above and the card's own bottom edge. */}
-      <div className="pointer-events-none absolute left-[7%] right-[8%] bottom-[30%] z-[1] text-white">
+      {/* Text — two independently positioned blocks. Coordinates are set via
+          inline style (not Tailwind arbitrary-value classes) specifically so
+          there is no ambiguity about a competing class winning the cascade:
+          the meta block is top-anchored (top:59%, bottom:auto) and the copy
+          block is bottom-anchored (bottom:8%, top:auto) — each sets only the
+          one edge it cares about, so line-count changes in one block can
+          never push the other around. */}
+      <div
+        className="pointer-events-none z-[1] text-white"
+        style={{ position: "absolute", left: "7%", right: "7%", top: "59%", bottom: "auto" }}
+      >
         <p className="text-[12px] font-semibold leading-[1.2] tracking-[0.1em]">{person.labelEn}</p>
-        <p className="mt-1 text-[15px] font-semibold leading-[1.4]">{person.labelJa}</p>
-        <p className="mt-1 text-[12px] font-normal leading-[1.4] text-white/85">{person.year}</p>
+        <p className="text-[15px] font-semibold leading-[1.4]" style={{ marginTop: "3px" }}>
+          {person.labelJa}
+        </p>
+        <p className="text-[12px] font-normal text-white/85" style={{ marginTop: "4px", lineHeight: 1.4 }}>
+          {person.year}
+        </p>
       </div>
-      <div className="pointer-events-none absolute left-[7%] right-[8%] bottom-[8.5%] z-[1] text-white">
-        <p className="whitespace-pre-line text-[14px] font-medium leading-[1.45]">{person.message}</p>
+      <div
+        className="pointer-events-none z-[1] text-white"
+        style={{ position: "absolute", left: "7%", right: "7%", bottom: "8%", top: "auto" }}
+      >
+        <p className="whitespace-pre-line text-[14px] font-medium" style={{ lineHeight: 1.45 }}>
+          {person.message}
+        </p>
       </div>
     </Link>
   );
