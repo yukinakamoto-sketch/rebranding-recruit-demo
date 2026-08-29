@@ -7,58 +7,64 @@ import "swiper/css";
 import { peopleCards, peopleCopy, type PersonCard } from "@/lib/content/people";
 import Reveal from "@/components/recruit/Reveal";
 
-// All 5 pre-composited card images ("photo + diagonal frame + color face")
-// have been trimmed to their real (alpha-based) content bounds — the source
-// PNGs had a large transparent margin around the panel (see
-// people-card-0N-original.png for the untrimmed 1024x1536 originals). Their
-// trimmed ratios land within ~0.354-0.390 (w/h); this shared box uses their
-// average (~0.368) so all 5 render at equal height with only a hair of
-// object-contain letterbox on the outliers, never distortion.
-const CARD_ASPECT = "aspect-[46/125]";
-
 function PeopleCard({ person }: { person: PersonCard }) {
   return (
     <Link
       href="/people"
-      className={`group relative block w-full min-w-0 overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-1 ${CARD_ASPECT}`}
+      className="group block transition-transform duration-300 ease-out hover:-translate-y-1"
     >
-      {/* The finished card image IS the card — photo, diagonal frame, and
-          color face are already baked in. No separate frame overlay,
-          clip-path, or per-card object-position: object-contain simply
-          shows it at its true, undistorted ratio. */}
-      <Image
-        src={person.cardImage.src}
-        alt={person.cardImage.alt}
-        fill
-        sizes="(max-width: 768px) 78vw, 18vw"
-        className="object-contain"
-      />
-      {/* Text — two independently positioned blocks. Coordinates are set via
-          inline style (not Tailwind arbitrary-value classes) specifically so
-          there is no ambiguity about a competing class winning the cascade:
-          the meta block is top-anchored (top:59%, bottom:auto) and the copy
-          block is bottom-anchored (bottom:8%, top:auto) — each sets only the
-          one edge it cares about, so line-count changes in one block can
-          never push the other around. */}
-      <div
-        className="pointer-events-none z-[1] text-white"
-        style={{ position: "absolute", left: "7%", right: "7%", top: "59%", bottom: "auto" }}
-      >
-        <p className="text-[12px] font-semibold leading-[1.2] tracking-[0.1em]">{person.labelEn}</p>
-        <p className="text-[15px] font-semibold leading-[1.4]" style={{ marginTop: "3px" }}>
-          {person.labelJa}
-        </p>
-        <p className="text-[12px] font-normal text-white/85" style={{ marginTop: "4px", lineHeight: 1.4 }}>
-          {person.year}
-        </p>
-      </div>
-      <div
-        className="pointer-events-none z-[1] text-white"
-        style={{ position: "absolute", left: "7%", right: "7%", bottom: "8%", top: "auto" }}
-      >
-        <p className="whitespace-pre-line text-[14px] font-medium" style={{ lineHeight: 1.45 }}>
-          {person.message}
-        </p>
+      {/* Containing block for the two absolute text blocks below. It has no
+          size of its own beyond what the <Image> renders at — no shared
+          aspect-ratio box, no `fill`/`object-contain` — so this box's edges
+          are, pixel for pixel, the same as the visible card art's edges.
+          Mobile (default): width:100% / height:auto, matching the Swiper
+          slide's own width. Desktop row (sm:): a common fixed height so all
+          5 cards line up visually despite each PNG's slightly different
+          trimmed aspect ratio; width is left auto so it hugs whatever width
+          that height produces for this particular image (never stretched
+          or squashed). */}
+      <div className="peopleCardVisual relative overflow-hidden sm:h-[clamp(560px,43vw,650px)]">
+        {/* The finished card image IS the card — photo, diagonal frame, and
+            color face are already baked in. Real width/height (each PNG's
+            own trimmed size, see lib/content/people.ts) + no object-fit:
+            the <img> renders at its native ratio, so the box above is an
+            exact match for the art with zero letterbox padding. */}
+        <Image
+          src={person.cardImage.src}
+          alt={person.cardImage.alt}
+          width={person.cardImage.width}
+          height={person.cardImage.height}
+          sizes="(max-width: 768px) 78vw, 235px"
+          className="block h-auto w-full sm:h-full sm:w-auto"
+        />
+        {/* Text — two independently positioned blocks, coordinates set via
+            inline style against peopleCardVisual (the position:relative
+            parent immediately above), which now exactly matches the
+            rendered image. The meta block is top-anchored (top:58%,
+            bottom:auto) and the copy block is bottom-anchored (bottom:8%,
+            top:auto) — each sets only the one edge it cares about. */}
+        <div
+          className="pointer-events-none z-[1] text-white"
+          style={{ position: "absolute", left: "6%", right: "6%", top: "58%", bottom: "auto" }}
+        >
+          <p className="font-semibold" style={{ fontSize: "12px", lineHeight: 1.15, letterSpacing: "0.1em" }}>
+            {person.labelEn}
+          </p>
+          <p className="font-semibold" style={{ fontSize: "14px", lineHeight: 1.3, marginTop: "3px" }}>
+            {person.labelJa}
+          </p>
+          <p className="font-normal text-white/85" style={{ fontSize: "11px", lineHeight: 1.3, marginTop: "3px" }}>
+            {person.year}
+          </p>
+        </div>
+        <div
+          className="pointer-events-none z-[1] text-white"
+          style={{ position: "absolute", left: "6%", right: "6%", bottom: "8%", top: "auto" }}
+        >
+          <p className="whitespace-pre-line font-medium" style={{ fontSize: "14px", lineHeight: 1.4 }}>
+            {person.message}
+          </p>
+        </div>
       </div>
     </Link>
   );
@@ -95,11 +101,11 @@ export default function People() {
           </p>
         </div>
 
-        {/* Desktop/tablet: 5 equal-width columns, centered at 92% of the
-            section's inner width — plain grid, no CSS up-scaling. The
-            trimmed card art (see CARD_ASPECT above) is what makes these
-            render large now, not a width/scale hack on the layout. */}
-        <div className="mt-[30px] hidden w-[92%] mx-auto sm:grid grid-cols-5 gap-[12px]">
+        {/* Desktop/tablet: centered flex row, not a grid of equal-width
+            columns — each card's width is left to its own trimmed image
+            ratio (see PeopleCard's peopleCardVisual) instead of being
+            stretched/squashed to a shared column width. */}
+        <div className="mt-[30px] hidden items-start justify-center gap-[14px] sm:flex">
           {peopleCards.map((person) => (
             <PeopleCard key={person.id} person={person} />
           ))}

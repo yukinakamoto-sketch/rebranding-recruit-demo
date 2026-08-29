@@ -11,10 +11,16 @@ export type PersonCard = {
   colorVariant: ColorVariant;
   photo: { src: string; alt: string; position?: string };
   // Pre-composited "photo + diagonal frame + color face" panel used by the
-  // TOP page's PEOPLE section (components/recruit/People.tsx). All 5 share
-  // the same native size (1024x1536). The plain `photo` field above is kept
-  // for the /people sub-page's separate plain photo grid — do not remove it.
-  cardImage: { src: string; alt: string };
+  // TOP page's PEOPLE section (components/recruit/People.tsx). Each PNG has
+  // been trimmed to its own real (alpha-based) content bounds, so the 5 no
+  // longer share one native size — width/height are each image's actual
+  // trimmed pixel size (checked via `sharp().metadata()`), used as the
+  // native Image width/height so no shared aspect-ratio box or
+  // object-contain letterboxing sits between the rendered art and the
+  // absolute-positioned text on top of it. The plain `photo` field above is
+  // kept for the /people sub-page's separate plain photo grid — do not
+  // remove it.
+  cardImage: { src: string; alt: string; width: number; height: number };
 };
 
 export const peopleCards: PersonCard[] = [
@@ -33,6 +39,8 @@ export const peopleCards: PersonCard[] = [
     cardImage: {
       src: "/images/recruit/people/people-card-01.png",
       alt: "窓辺に立つ紳士服姿の男性社員",
+      width: 540,
+      height: 1525,
     },
   },
   {
@@ -50,6 +58,8 @@ export const peopleCards: PersonCard[] = [
     cardImage: {
       src: "/images/recruit/people/people-card-02.png",
       alt: "窓辺に立つ若手ビジネスウーマン",
+      width: 540,
+      height: 1508,
     },
   },
   {
@@ -67,6 +77,8 @@ export const peopleCards: PersonCard[] = [
     cardImage: {
       src: "/images/recruit/people/people-card-03.png",
       alt: "資料を確認するクリエイティブ職の社員",
+      width: 546,
+      height: 1510,
     },
   },
   {
@@ -84,6 +96,8 @@ export const peopleCards: PersonCard[] = [
     cardImage: {
       src: "/images/recruit/people/people-card-04.png",
       alt: "窓辺に立つ洗練されたビジネスウーマン",
+      width: 565,
+      height: 1498,
     },
   },
   {
@@ -101,6 +115,8 @@ export const peopleCards: PersonCard[] = [
     cardImage: {
       src: "/images/recruit/people/people-card-05.png",
       alt: "モダンオフィスで微笑む男性社員",
+      width: 586,
+      height: 1504,
     },
   },
 ];
