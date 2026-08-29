@@ -59,9 +59,9 @@ function PeopleCard({ person }: { person: PersonCard }) {
         </div>
         <div
           className="pointer-events-none z-[1] text-white"
-          style={{ position: "absolute", left: "6%", right: "6%", bottom: "8%", top: "auto" }}
+          style={{ position: "absolute", left: "6%", right: "6%", bottom: "12%", top: "auto" }}
         >
-          <p className="whitespace-pre-line font-medium" style={{ fontSize: "14px", lineHeight: 1.4 }}>
+          <p className="whitespace-pre-line font-semibold" style={{ fontSize: "16px", lineHeight: 1.5 }}>
             {person.message}
           </p>
         </div>
