@@ -2,14 +2,15 @@ export const aboutContent = {
   label: "ABOUT REBRANDING",
   titleLine1: "企業の変化に、",
   titleLine2: "伴走する。",
-  // 4 separate paragraphs (not \n/<br> inside one block) — each is its own
+  // 3 separate paragraphs (not \n/<br> inside one block) — each is its own
   // <p> in About.tsx, so paragraph breaks stay fixed while each paragraph's
-  // own line-wrapping still follows the container width naturally.
+  // own line-wrapping still follows the container width naturally. The 2nd
+  // paragraph's 2 sentences are joined as ordinary flowing text (no br)
+  // within that same <p>.
   bodyParagraphs: [
-    "リブランディングは、検索・評判・ブランディング・デジタル戦略という4つの領域から、企業のブランド価値を高めるパートナーです。",
-    "変化の激しい時代において、企業が本来持つ強みを可視化し、市場に正しく伝えることを使命としています。",
-    "私たちは戦略設計からコンテンツ制作、デジタル実装までを一気通貫で支援し、クライアントの成長に伴走します。",
-    "そのために、業界・職種の垣根を越えて挑戦し続けるメンバーを求めています。",
+    "リブランディングは、検索・評判・ブランディング・デジタル戦略を通じて、企業の価値を高める会社です。",
+    "企業が持つ本当の強みを見つけ、正しく伝え、成長につなげていく。戦略を考えるだけでなく、コンテンツ制作やデジタル実装まで一気通貫で手がけます。",
+    "領域や職種にとらわれず、変化を楽しみながら挑戦できる仲間を求めています。",
   ],
   images: {
     large: {

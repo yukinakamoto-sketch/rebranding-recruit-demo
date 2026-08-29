@@ -3,10 +3,10 @@ import { aboutContent } from "@/lib/content/about";
 import Reveal from "@/components/recruit/Reveal";
 
 // Key multi-character terms that must not split mid-word on PC (a plain
-// Japanese line-break can legally fall inside e.g. "ブランド価|値"). Wrapped
+// Japanese line-break can legally fall inside e.g. "デジ|タル戦略"). Wrapped
 // in md:whitespace-nowrap only — SP gets ordinary wrapping, and everything
 // around these terms still wraps normally at any width.
-const NOWRAP_TERMS = ["ブランド価値", "デジタル戦略", "一気通貫", "クライアントの成長"];
+const NOWRAP_TERMS = ["デジタル戦略", "一気通貫"];
 
 function withProtectedTerms(text: string) {
   const pattern = new RegExp(`(${NOWRAP_TERMS.join("|")})`, "g");
