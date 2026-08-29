@@ -33,18 +33,18 @@ function PeopleCard({ person }: { person: PersonCard }) {
         sizes="(max-width: 768px) 78vw, 18vw"
         className="object-contain"
       />
-      {/* Text — confined to the image's lower color face. Now that the PNGs
-          are trimmed to their real content bounds, the color face runs
-          almost edge-to-edge (measured ~1-2% to ~99%, narrowing only in the
-          bottom-right diagonal corner), so a modest 9% inset is enough to
-          keep every glyph inside the panel. */}
-      <div className="pointer-events-none absolute left-[9%] right-[9%] top-[57%] bottom-[9%] z-[1] flex flex-col justify-between text-white">
-        <div>
-          <p className="text-[13px] font-semibold leading-[1.3] tracking-[0.13em]">{person.labelEn}</p>
-          <p className="mt-1 text-[14px] font-medium leading-[1.5]">{person.labelJa}</p>
-          <p className="mt-1 text-[11px] font-normal text-white/85">{person.year}</p>
-        </div>
-        <p className="whitespace-pre-line text-[15px] font-medium leading-[1.6]">{person.message}</p>
+      {/* Text — two independently bottom-anchored blocks (not a single
+          flex-col justify-between box) so every card lines up on the same
+          left edge and the same distance-from-bottom, regardless of how
+          much the eyebrow/label wraps. Both sit inside the color face,
+          clear of the diagonal cut above and the card's own bottom edge. */}
+      <div className="pointer-events-none absolute left-[7%] right-[8%] bottom-[30%] z-[1] text-white">
+        <p className="text-[12px] font-semibold leading-[1.2] tracking-[0.1em]">{person.labelEn}</p>
+        <p className="mt-1 text-[15px] font-semibold leading-[1.4]">{person.labelJa}</p>
+        <p className="mt-1 text-[12px] font-normal leading-[1.4] text-white/85">{person.year}</p>
+      </div>
+      <div className="pointer-events-none absolute left-[7%] right-[8%] bottom-[8%] z-[1] text-white">
+        <p className="whitespace-pre-line text-[14px] font-medium leading-[1.6]">{person.message}</p>
       </div>
     </Link>
   );
